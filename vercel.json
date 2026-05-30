@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/english-coach%20(2).html"
+    }
+  ]
+}
