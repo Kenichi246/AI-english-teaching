@@ -629,19 +629,15 @@ Rules:
 - pinyin must include tone marks (e.g. nǐ hǎo).`;
 
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch('/api/analyze', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true',
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 2048,
-        system: sys,
-        messages: [{ role: 'user', content: `Chinese text: "${text}"` }]
-      })
+  'Content-Type': 'application/json'
+},
+body: JSON.stringify({
+  text,
+  systemPrompt: sys
+})
     });
 
     if (!res.ok) {
@@ -650,7 +646,7 @@ Rules:
     }
 
     const data  = await res.json();
-    const raw   = (data.content || []).map(b => b.text || '').join('');
+    const raw   = data.text || ''.map(b => b.text || '').join('');
     const match = raw.match(/\{[\s\S]*\}/);
     if (!match) throw new Error('JSONが返ってきませんでした');
     const result = JSON.parse(match[0]);
