@@ -657,7 +657,7 @@ body: JSON.stringify({
     }
 
     const data  = await res.json();
-    const raw   = data.text || '';.map(b => b.text || '').join('');
+    const raw   = data.text || '';
     const match = raw.match(/\{[\s\S]*\}/);
     if (!match) throw new Error('JSONが返ってきませんでした');
     const result = JSON.parse(match[0]);
