@@ -33,8 +33,9 @@ export default async function handler(req, res) {
       data.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
     return res.status(200).json({
-      text: raw
-    });
+  text: raw,
+  debug: data
+});
 
   } catch (err) {
     return res.status(500).json({
